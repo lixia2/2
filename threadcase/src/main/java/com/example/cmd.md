@@ -77,4 +77,5 @@ git status
 git add
 git commit -m ""
 
-
+刷新 DNS 解析缓存
+ipconfig /flushdns
