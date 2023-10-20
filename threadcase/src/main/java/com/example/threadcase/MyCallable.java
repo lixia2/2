@@ -3,6 +3,8 @@ package com.example.threadcase;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.util.StopWatch;
 
+import javax.lang.model.element.VariableElement;
+import java.util.Random;
 import java.util.concurrent.*;
 
 public class MyCallable implements Callable<String>{
@@ -98,5 +100,56 @@ class secondMethodCallable{
             }
         });
         executor.shutdown();
+    }
+}
+
+// callable任务借助future task运行
+class CallableAndFutureTask{
+    static Random random= new Random();
+    public static void main(String[] args) {
+        Callable<Integer> callable = new Callable<Integer>() {
+
+            @Override
+            public Integer call() throws Exception {
+                return random.nextInt(2); // 随机返回【0，1）之间的值
+            }
+        };
+        FutureTask<Integer> future = new FutureTask<>(callable);
+        Thread thread = new Thread(future);
+        thread.start();
+        try {
+            Thread.sleep(2000);
+            System.out.println(future.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+
+//callable任务和线程池一起使用，然后返回值是future
+class CallableAndFuture{
+    static Random random =new Random();
+
+    public static void main(String[] args) {
+        ExecutorService threadPool = Executors.newSingleThreadExecutor();
+        Future<Integer> future = threadPool.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return random.nextInt(2);
+            }
+        });
+        try {
+            TimeUnit.SECONDS.sleep(1);
+            Thread.sleep(1000);
+            System.out.println(future.get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
     }
 }
