@@ -47,3 +47,34 @@ centenos7操作防火墙的其它命令：
 查看防火墙状态：firewall-cmd --state
 
 关闭端口号（如：关闭80端口）：firewall-cmd --zone=public --remove-port=80/tcp
+
+git命令
+1.配置当前项目的用户名和邮箱
+找到项目所在目录下的 .git，进入.git文件夹，然后执行如下命令分别设置用户名和邮箱
+git config user.name "lixia2"
+git config user.email "2956559903@qq.com"
+然后执行命令查看config文件：cat config
+cat config
+设置全局用户名和邮箱
+git config --global user.name lixia
+git config --global user.email 123@qq.com
+查看全局配置
+git config --global --list
+关闭ssh验证
+git config --global http.sslverify false
+git config --system http.sslverify false
+如果git pull 每次都要求输入用户名和密码，则可以执行如下配置
+git config credential.helper store
+推送到远程指定分支
+git push -u origin master
+git push --set-upstream origin master
+创建分支
+git branch -M master
+和远程仓库链接起来
+git remote add origin https;//github.com/lixia2/2.git
+查看状态
+git status
+git add
+git commit -m ""
+
+
